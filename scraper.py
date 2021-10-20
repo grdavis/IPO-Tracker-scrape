@@ -1,23 +1,13 @@
-from selenium import webdriver
-from bs4 import BeautifulSoup, Comment
+from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
+import requests
 
 URL = 'https://endpts.com/ipo-tracker/'
 
-def get_chrome_data(url, driver):
-	driver.get(url)
-	return driver.page_source
-
-def new_driver():
-	chrome_options = webdriver.ChromeOptions()  
-	chrome_options.add_argument("--headless")
-	return webdriver.Chrome(options = chrome_options)
-
 def main():
-	driver = new_driver()
-	data = get_chrome_data(URL, driver)
-	soup = BeautifulSoup(data, 'html.parser').find_all('div', {'class':'epn_ipo_card_table_list'})
+	content = requests.get(URL).content
+	soup = BeautifulSoup(content, 'html.parser').find_all('div', {'class':'epn_ipo_card_table_list'})
 	all_data = []
 	for table in soup:
 		row = {}
@@ -29,7 +19,6 @@ def main():
 		all_data.append(row)
 	output = pd.DataFrame(all_data)
 	output.to_csv('all_data_%s.csv' % str(datetime.today())[:10], index = False)
-	driver.quit()
 
 if __name__ == '__main__':
 	main()
