@@ -18,7 +18,7 @@ def main():
 			row[item.find('span').text] = item.find('h6').text
 		all_data.append(row)
 	output = pd.DataFrame(all_data)
-	output.to_csv('all_data_%s.csv' % str(datetime.today())[:10], index = False)
+	output.to_csv('Data/all_data_%s.csv' % str(datetime.today())[:10], index = False)
 
 if __name__ == '__main__':
 	main()
