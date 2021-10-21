@@ -1,9 +1,10 @@
 name: weekly-scrape
 on:
   schedule: 
-    - cron: '* * * * *'
+    - cron: '*/5 * * * *'
 jobs:
-  build:
+  job1:
+    name: scrape
     runs-on: ubuntu-latest
     steps:
       - name: checkout repo content
