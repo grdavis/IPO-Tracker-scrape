@@ -1,5 +1,7 @@
 name: weekly-scrape
-on: [push]
+on:
+  schedule:
+    - cron: '0 23 * * 4'
 jobs:
   job1:
     name: scrape
